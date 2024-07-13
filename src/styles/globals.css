@@ -76,5 +76,26 @@
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  @apply bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transition-colors duration-300;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.hover-lift {
+  @apply transition-transform duration-300 ease-in-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
 }
