@@ -17,6 +17,10 @@ import Chatbot from '@/components/Chatbot';
 import ReferralProgram from '@/components/ReferralProgram';
 import ProgressTracker from '@/components/ProgressTracker';
 import TestimonialSubmission from '@/components/TestimonialSubmission';
+import LoanComparison from '@/components/LoanComparison';
+import LiveChat from '@/components/LiveChat';
+import CustomerReviews from '@/components/CustomerReviews';
+import BusinessGrowthCalculator from '@/components/BusinessGrowthCalculator';
 
 export default function Home() {
   const [showApplication, setShowApplication] = useState(false);
@@ -123,9 +127,20 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-center mb-8">Estimate Your Loan</h2>
             <LoanCalculator />
           </section>
+
+          <section className="mt-16">
+            <h2 className="text-3xl font-bold text-center mb-8">Compare Loan Options</h2>
+            <LoanComparison />
+          </section>
+
+          <section className="mt-16">
+            <h2 className="text-3xl font-bold text-center mb-8">Calculate Your Business Growth</h2>
+            <BusinessGrowthCalculator />
+          </section>
         </main>
 
         <SuccessStories />
+        <CustomerReviews />
         <Testimonials />
         <TestimonialSubmission />
         <BlogPosts />
@@ -134,6 +149,7 @@ export default function Home() {
         <CTA setShowApplication={setShowApplication} />
         <Support />
         <Chatbot />
+        <LiveChat />
 
         <footer className="bg-gray-100 dark:bg-gray-900 mt-12">
           <div className="container mx-auto px-4 py-8">
