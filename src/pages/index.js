@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+const DynamicMotion = dynamic(() => import('framer-motion').then((mod) => mod.motion), { ssr: false });
+
 export default function Home() {
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    // Initialize count or perform any client-side only operations here
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
@@ -19,7 +25,7 @@ export default function Home() {
       <Header />
 
       <main className="container mx-auto px-4 py-12">
-        <motion.div 
+        <DynamicMotion 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -38,7 +44,7 @@ export default function Home() {
           >
             Click me: {count}
           </Button>
-        </motion.div>
+        </DynamicMotion>
       </main>
 
       <Footer />
