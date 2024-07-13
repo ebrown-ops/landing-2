@@ -12,6 +12,8 @@ import Support from '@/components/Support';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Notification from '@/components/Notification';
 import SuccessStories from '@/components/SuccessStories';
+import BlogPosts from '@/components/BlogPosts';
+import Chatbot from '@/components/Chatbot';
 
 export default function Home() {
   const [showApplication, setShowApplication] = useState(false);
@@ -113,9 +115,11 @@ export default function Home() {
 
         <SuccessStories />
         <Testimonials />
+        <BlogPosts />
         <FAQ />
         <CTA setShowApplication={setShowApplication} />
         <Support />
+        <Chatbot />
 
         <footer className="bg-gray-100 dark:bg-gray-900 mt-12">
           <div className="container mx-auto px-4 py-8">
