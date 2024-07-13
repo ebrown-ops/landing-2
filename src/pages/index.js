@@ -9,93 +9,121 @@ import FAQ from '@/components/FAQ';
 import Testimonials from '@/components/Testimonials';
 import LoanCalculator from '@/components/LoanCalculator';
 import Support from '@/components/Support';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import Notification from '@/components/Notification';
+import SuccessStories from '@/components/SuccessStories';
 
 export default function Home() {
   const [showApplication, setShowApplication] = useState(false);
+  const [notification, setNotification] = useState(null);
+
+  const showNotification = (message, type) => {
+    setNotification({ message, type });
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <Head>
-        <title>SBG Funding - Small Business Loans Made Simple</title>
-        <meta name="description" content="Get the capital you need to grow your business with SBG Funding. Fast approvals, flexible terms, and expert support for small businesses." />
-        <link rel="icon" href="/favicon.ico" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FinancialService",
-            "name": "SBG Funding",
-            "description": "Small business loans and funding solutions",
-            "url": "https://www.sbgfunding.com",
-            "sameAs": [
-              "https://www.facebook.com/sbgfunding",
-              "https://www.linkedin.com/company/sbg-funding"
-            ],
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "17 State Street, 21st Floor",
-              "addressLocality": "New York",
-              "addressRegion": "NY",
-              "postalCode": "10004",
-              "addressCountry": "US"
-            },
-            "telephone": "+1-844-284-2725",
-            "openingHours": "Mo,Tu,We,Th,Fr 09:00-18:00"
-          })}
-        </script>
-      </Head>
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
+        <Head>
+          <title>SBG Funding - Small Business Loans Made Simple</title>
+          <meta name="description" content="Get the capital you need to grow your business with SBG Funding. Fast approvals, flexible terms, and expert support for small businesses." />
+          <link rel="icon" href="/favicon.ico" />
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FinancialService",
+              "name": "SBG Funding",
+              "description": "Small business loans and funding solutions",
+              "url": "https://www.sbgfunding.com",
+              "sameAs": [
+                "https://www.facebook.com/sbgfunding",
+                "https://www.linkedin.com/company/sbg-funding"
+              ],
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "17 State Street, 21st Floor",
+                "addressLocality": "New York",
+                "addressRegion": "NY",
+                "postalCode": "10004",
+                "addressCountry": "US"
+              },
+              "telephone": "+1-844-284-2725",
+              "openingHours": "Mo,Tu,We,Th,Fr 09:00-18:00"
+            })}
+          </script>
+        </Head>
 
-      <a href="#main-content" className="sr-only focus:not-sr-only">Skip to main content</a>
-
-      <Header />
-
-      <main id="main-content" className="container mx-auto px-4 py-12">
-        {!showApplication ? (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">Small Business Funding Made Simple</h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">Get the capital you need to grow your business, fast and hassle-free. SBG Funding is your trusted partner in business success.</p>
-            <Button size="lg" onClick={() => setShowApplication(true)} className="gradient-bg text-white">Apply Now</Button>
-            <div className="mt-12 grid md:grid-cols-3 gap-8">
-              <FeatureCard title="Fast Approval" description="Get approved in as little as 24 hours with our streamlined process." />
-              <FeatureCard title="Flexible Terms" description="Customize your loan terms to fit your business needs and cash flow." />
-              <FeatureCard title="Expert Support" description="Our team of funding specialists is here to guide you every step of the way." />
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Card className="w-full max-w-4xl mx-auto">
-              <CardContent className="p-6">
-                <ApplicationForm />
-              </CardContent>
-            </Card>
-          </motion.div>
+        {notification && (
+          <Notification
+            message={notification.message}
+            type={notification.type}
+            onClose={() => setNotification(null)}
+          />
         )}
 
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold text-center mb-8">Estimate Your Loan</h2>
-          <LoanCalculator />
-        </section>
-      </main>
+        <a href="#main-content" className="sr-only focus:not-sr-only">Skip to main content</a>
 
-      <Testimonials />
-      <FAQ />
-      <CTA setShowApplication={setShowApplication} />
-      <Support />
+        <Header />
 
-      <footer className="bg-gray-100 dark:bg-gray-900 mt-12">
-        <div className="container mx-auto px-4 py-8">
-          <p className="text-center text-gray-600 dark:text-gray-400">&copy; 2024 SBG Funding. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+        <main id="main-content" className="container mx-auto px-4 py-12">
+          {!showApplication ? (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">Small Business Funding Made Simple</h1>
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">Get the capital you need to grow your business, fast and hassle-free. SBG Funding is your trusted partner in business success.</p>
+              <Button 
+                size="lg" 
+                onClick={() => {
+                  setShowApplication(true);
+                  showNotification("Application form loaded. Good luck!", "info");
+                }} 
+                className="gradient-bg text-white"
+              >
+                Apply Now
+              </Button>
+              <div className="mt-12 grid md:grid-cols-3 gap-8">
+                <FeatureCard title="Fast Approval" description="Get approved in as little as 24 hours with our streamlined process." />
+                <FeatureCard title="Flexible Terms" description="Customize your loan terms to fit your business needs and cash flow." />
+                <FeatureCard title="Expert Support" description="Our team of funding specialists is here to guide you every step of the way." />
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="w-full max-w-4xl mx-auto">
+                <CardContent className="p-6">
+                  <ApplicationForm onSubmitSuccess={() => showNotification("Application submitted successfully!", "success")} />
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          <section className="mt-16">
+            <h2 className="text-3xl font-bold text-center mb-8">Estimate Your Loan</h2>
+            <LoanCalculator />
+          </section>
+        </main>
+
+        <SuccessStories />
+        <Testimonials />
+        <FAQ />
+        <CTA setShowApplication={setShowApplication} />
+        <Support />
+
+        <footer className="bg-gray-100 dark:bg-gray-900 mt-12">
+          <div className="container mx-auto px-4 py-8">
+            <p className="text-center text-gray-600 dark:text-gray-400">&copy; 2024 SBG Funding. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
+    </ErrorBoundary>
   );
 }
 
