@@ -104,11 +104,22 @@ export default function ApplicationForm({ onSubmitSuccess }) {
   };
 
   const nextStep = () => {
-    form.trigger();
-    if (form.formState.isValid) {
-      setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
-      saveProgress(form.getValues());
-    }
+    const currentStepFields = Object.keys(form.getValues()).filter(field => 
+      form.getValues()[field] !== '' && form.getValues()[field] !== 0
+    );
+    
+    form.trigger(currentStepFields).then((isStepValid) => {
+      if (isStepValid) {
+        setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+        saveProgress(form.getValues());
+      } else {
+        toast({
+          title: "Validation Error",
+          description: "Please fill out all required fields correctly before proceeding.",
+          variant: "destructive",
+        });
+      }
+    });
   };
 
   const prevStep = () => {
