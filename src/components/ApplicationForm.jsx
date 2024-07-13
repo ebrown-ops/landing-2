@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
 import { Tooltip } from "@/components/ui/tooltip";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Info } from "lucide-react";
 import PersonalInfoStep from './steps/PersonalInfoStep';
 import BusinessInfoStep from './steps/BusinessInfoStep';
@@ -29,6 +30,21 @@ const schema = z.object({
   loanAmount: z.number().min(1000, 'Loan amount must be at least $1,000'),
   loanPurpose: z.string().min(2, 'Please select a loan purpose'),
 });
+
+const faqItems = [
+  {
+    question: "How long does the application process take?",
+    answer: "Our streamlined application process typically takes about 10-15 minutes to complete. Once submitted, you can expect a decision within 24 hours."
+  },
+  {
+    question: "What documents do I need to apply?",
+    answer: "For the initial application, you only need to provide basic information about yourself and your business. If approved, we may request additional documents such as bank statements and tax returns."
+  },
+  {
+    question: "Is my information secure?",
+    answer: "Yes, we use bank-level encryption to protect your personal and business information. We never share your data without your explicit permission."
+  }
+];
 
 export default function ApplicationForm() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -51,6 +67,19 @@ export default function ApplicationForm() {
     },
   });
 
+  useEffect(() => {
+    const savedProgress = localStorage.getItem('applicationProgress');
+    if (savedProgress) {
+      const parsedProgress = JSON.parse(savedProgress);
+      form.reset(parsedProgress);
+      setCurrentStep(parsedProgress.currentStep || 0);
+    }
+  }, []);
+
+  const saveProgress = (data) => {
+    localStorage.setItem('applicationProgress', JSON.stringify({ ...data, currentStep }));
+  };
+
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     try {
@@ -61,6 +90,7 @@ export default function ApplicationForm() {
         title: "Application Submitted",
         description: "We've received your application and will be in touch soon.",
       });
+      localStorage.removeItem('applicationProgress');
     } catch (error) {
       toast({
         title: "Submission Error",
@@ -76,11 +106,13 @@ export default function ApplicationForm() {
     form.trigger();
     if (form.formState.isValid) {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+      saveProgress(form.getValues());
     }
   };
 
   const prevStep = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
+    saveProgress(form.getValues());
   };
 
   return (
@@ -135,6 +167,20 @@ export default function ApplicationForm() {
             </Button>
           )}
         </div>
+
+        <Accordion type="single" collapsible className="w-full mt-8">
+          <AccordionItem value="faq">
+            <AccordionTrigger>Frequently Asked Questions</AccordionTrigger>
+            <AccordionContent>
+              {faqItems.map((item, index) => (
+                <div key={index} className="mb-4">
+                  <h4 className="font-semibold">{item.question}</h4>
+                  <p className="text-sm text-gray-600">{item.answer}</p>
+                </div>
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </form>
     </Form>
   );
