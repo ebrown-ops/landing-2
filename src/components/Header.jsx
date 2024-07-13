@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
+import { ModeToggle } from "./ModeToggle"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,8 +23,10 @@ export default function Header() {
           <Link href="/contact" passHref>
             <Button variant="ghost">Contact</Button>
           </Link>
+          <ModeToggle />
         </nav>
         <div className="flex items-center md:hidden">
+          <ModeToggle />
           <Button variant="outline" className="ml-4" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
