@@ -15,6 +15,7 @@ import PersonalInfoStep from './steps/PersonalInfoStep';
 import BusinessInfoStep from './steps/BusinessInfoStep';
 import LoanInfoStep from './steps/LoanInfoStep';
 import SummaryStep from './steps/SummaryStep';
+import DocumentUpload from './DocumentUpload';
 
 const steps = ['Personal', 'Business', 'Loan', 'Documents', 'Summary'];
 
@@ -129,9 +130,8 @@ export default function ApplicationForm({ onSubmitSuccess }) {
     saveProgress(form.getValues());
   };
 
-  const handleFileUpload = (event) => {
-    const files = Array.from(event.target.files);
-    form.setValue('documents', [...form.getValues('documents'), ...files]);
+  const handleFileUpload = (files) => {
+    form.setValue('documents', files);
   };
 
   return (
@@ -168,29 +168,7 @@ export default function ApplicationForm({ onSubmitSuccess }) {
             {currentStep === 0 && <PersonalInfoStep form={form} />}
             {currentStep === 1 && <BusinessInfoStep form={form} />}
             {currentStep === 2 && <LoanInfoStep form={form} />}
-            {currentStep === 3 && (
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Upload Documents</h3>
-                <p className="text-sm text-gray-600">Please upload any relevant documents (e.g., bank statements, tax returns)</p>
-                <div className="flex items-center space-x-2">
-                  <Button type="button" onClick={() => document.getElementById('file-upload').click()}>
-                    <Upload className="mr-2 h-4 w-4" /> Upload Files
-                  </Button>
-                  <input
-                    id="file-upload"
-                    type="file"
-                    multiple
-                    className="hidden"
-                    onChange={handleFileUpload}
-                  />
-                </div>
-                <ul className="list-disc pl-5">
-                  {form.getValues('documents').map((file, index) => (
-                    <li key={index} className="text-sm">{file.name}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {currentStep === 3 && <DocumentUpload onUpload={handleFileUpload} />}
             {currentStep === 4 && <SummaryStep form={form} />}
           </motion.div>
         </AnimatePresence>
