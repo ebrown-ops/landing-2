@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3053",
+    "dev": "next dev -p 3054",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -33,7 +33,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slider": "^1.1.2",
-    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.5",
@@ -47,7 +47,7 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.1.5",
-    "framer-motion": "^11.3.2",
+    "framer-motion": "^11.2.12",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.363.0",
     "next": "14.2.4",
