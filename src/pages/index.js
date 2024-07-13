@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ApplicationForm from '@/components/ApplicationForm';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import FAQ from '@/components/FAQ';
 import Testimonials from '@/components/Testimonials';
 import LoanCalculator from '@/components/LoanCalculator';
@@ -157,11 +158,7 @@ export default function Home() {
         <Chatbot />
         <LiveChat />
 
-        <footer className="bg-gray-100 dark:bg-gray-900 mt-12">
-          <div className="container mx-auto px-4 py-8">
-            <p className="text-center text-gray-600 dark:text-gray-400">&copy; 2024 SBG Funding. All rights reserved.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </ErrorBoundary>
   );
