@@ -46,7 +46,7 @@ const faqItems = [
   }
 ];
 
-export default function ApplicationForm() {
+export default function ApplicationForm({ onSubmitSuccess }) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -91,6 +91,7 @@ export default function ApplicationForm() {
         description: "We've received your application and will be in touch soon.",
       });
       localStorage.removeItem('applicationProgress');
+      onSubmitSuccess();
     } catch (error) {
       toast({
         title: "Submission Error",
@@ -181,6 +182,15 @@ export default function ApplicationForm() {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+
+        <div className="mt-4">
+          <Button type="button" onClick={() => saveProgress(form.getValues())} variant="outline">
+            Save Progress
+          </Button>
+          <p className="text-sm text-gray-500 mt-2">
+            You can return to this application later by using the same device and browser.
+          </p>
+        </div>
       </form>
     </Form>
   );
