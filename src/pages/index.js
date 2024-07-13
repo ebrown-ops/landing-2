@@ -21,6 +21,9 @@ import LoanComparison from '@/components/LoanComparison';
 import LiveChat from '@/components/LiveChat';
 import CustomerReviews from '@/components/CustomerReviews';
 import BusinessGrowthCalculator from '@/components/BusinessGrowthCalculator';
+import NewsletterSignup from '@/components/NewsletterSignup';
+import ResourceCenter from '@/components/ResourceCenter';
+import ScheduleConsultation from '@/components/ScheduleConsultation';
 
 export default function Home() {
   const [showApplication, setShowApplication] = useState(false);
@@ -145,7 +148,10 @@ export default function Home() {
         <TestimonialSubmission />
         <BlogPosts />
         <FAQ />
+        <ResourceCenter />
         <ReferralProgram />
+        <ScheduleConsultation />
+        <NewsletterSignup />
         <CTA setShowApplication={setShowApplication} />
         <Support />
         <Chatbot />
