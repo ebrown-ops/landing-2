@@ -8,6 +8,7 @@ import Header from '@/components/Header';
 import FAQ from '@/components/FAQ';
 import Testimonials from '@/components/Testimonials';
 import LoanCalculator from '@/components/LoanCalculator';
+import Support from '@/components/Support';
 
 export default function Home() {
   const [showApplication, setShowApplication] = useState(false);
@@ -18,11 +19,36 @@ export default function Home() {
         <title>SBG Funding - Small Business Loans Made Simple</title>
         <meta name="description" content="Get the capital you need to grow your business with SBG Funding. Fast approvals, flexible terms, and expert support for small businesses." />
         <link rel="icon" href="/favicon.ico" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FinancialService",
+            "name": "SBG Funding",
+            "description": "Small business loans and funding solutions",
+            "url": "https://www.sbgfunding.com",
+            "sameAs": [
+              "https://www.facebook.com/sbgfunding",
+              "https://www.linkedin.com/company/sbg-funding"
+            ],
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "17 State Street, 21st Floor",
+              "addressLocality": "New York",
+              "addressRegion": "NY",
+              "postalCode": "10004",
+              "addressCountry": "US"
+            },
+            "telephone": "+1-844-284-2725",
+            "openingHours": "Mo,Tu,We,Th,Fr 09:00-18:00"
+          })}
+        </script>
       </Head>
+
+      <a href="#main-content" className="sr-only focus:not-sr-only">Skip to main content</a>
 
       <Header />
 
-      <main className="container mx-auto px-4 py-12">
+      <main id="main-content" className="container mx-auto px-4 py-12">
         {!showApplication ? (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -62,6 +88,7 @@ export default function Home() {
       <Testimonials />
       <FAQ />
       <CTA setShowApplication={setShowApplication} />
+      <Support />
 
       <footer className="bg-gray-100 dark:bg-gray-900 mt-12">
         <div className="container mx-auto px-4 py-8">
