@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Facebook, Twitter, LinkedIn, Instagram } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -26,23 +25,6 @@ export default function Footer() {
             <p className="text-sm text-gray-600 dark:text-gray-400">New York, NY 10001</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">Phone: (123) 456-7890</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">Email: info@sbgfunding.com</p>
-          </div>
-          <div>
-            <h4 className="text-md font-semibold mb-4">Follow Us</h4>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
-                <LinkedIn size={20} />
-              </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
-                <Instagram size={20} />
-              </a>
-            </div>
           </div>
         </div>
         <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-4 text-center">
