@@ -26,7 +26,7 @@ const schema = z.object({
   businessName: z.string().min(2, 'Business name must be at least 2 characters'),
   businessType: z.string().min(2, 'Please select a business type'),
   annualRevenue: z.string().min(1, 'Please enter your annual revenue'),
-  yearsInBusiness: z.number().min(0, 'Years in business must be 0 or greater'),
+  yearsInBusiness: z.number().min(0, 'Years in business must be 0 or greater').or(z.string().regex(/^\d+$/, 'Must be a number').transform(Number)),
   loanAmount: z.number().min(1000, 'Loan amount must be at least $1,000'),
   loanPurpose: z.string().min(2, 'Please select a loan purpose'),
   documents: z.array(z.any()).optional(),
