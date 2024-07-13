@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
+import { Progress } from "@/components/ui/progress";
 import PersonalInfoStep from './steps/PersonalInfoStep';
 import BusinessInfoStep from './steps/BusinessInfoStep';
 import LoanInfoStep from './steps/LoanInfoStep';
@@ -83,6 +84,9 @@ export default function ApplicationForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="mb-8">
+          <Progress value={(currentStep / (steps.length - 1)) * 100} className="w-full" />
+        </div>
         <div className="flex justify-between mb-8">
           {steps.map((step, index) => (
             <div key={step} className="flex flex-col items-center">
@@ -100,18 +104,20 @@ export default function ApplicationForm() {
           ))}
         </div>
 
-        <motion.div
-          key={currentStep}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-        >
-          {currentStep === 0 && <PersonalInfoStep form={form} />}
-          {currentStep === 1 && <BusinessInfoStep form={form} />}
-          {currentStep === 2 && <LoanInfoStep form={form} />}
-          {currentStep === 3 && <SummaryStep form={form} />}
-        </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {currentStep === 0 && <PersonalInfoStep form={form} />}
+            {currentStep === 1 && <BusinessInfoStep form={form} />}
+            {currentStep === 2 && <LoanInfoStep form={form} />}
+            {currentStep === 3 && <SummaryStep form={form} />}
+          </motion.div>
+        </AnimatePresence>
 
         <div className="flex justify-between mt-8">
           <Button type="button" onClick={prevStep} disabled={currentStep === 0}>

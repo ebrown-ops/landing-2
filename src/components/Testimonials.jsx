@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Card, CardContent } from "@/components/ui/card"
 
 const testimonials = [
@@ -20,18 +21,32 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-12 bg-white">
+    <section className="py-12 bg-white dark:bg-gray-800">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">What Our Clients Say</h2>
+        <motion.h2 
+          className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          What Our Clients Say
+        </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <Card key={index}>
-              <CardContent className="pt-6">
-                <p className="text-gray-600 mb-4">"{testimonial.quote}"</p>
-                <p className="font-semibold">{testimonial.name}</p>
-                <p className="text-sm text-gray-500">{testimonial.business}</p>
-              </CardContent>
-            </Card>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Card className="h-full hover-lift">
+                <CardContent className="p-6">
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 italic">"{testimonial.quote}"</p>
+                  <p className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.business}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
