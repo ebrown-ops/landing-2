@@ -14,10 +14,14 @@ import Notification from '@/components/Notification';
 import SuccessStories from '@/components/SuccessStories';
 import BlogPosts from '@/components/BlogPosts';
 import Chatbot from '@/components/Chatbot';
+import ReferralProgram from '@/components/ReferralProgram';
+import ProgressTracker from '@/components/ProgressTracker';
+import TestimonialSubmission from '@/components/TestimonialSubmission';
 
 export default function Home() {
   const [showApplication, setShowApplication] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [applicationStep, setApplicationStep] = useState(0);
 
   const showNotification = (message, type) => {
     setNotification({ message, type });
@@ -101,9 +105,17 @@ export default function Home() {
             >
               <Card className="w-full max-w-4xl mx-auto">
                 <CardContent className="p-6">
-                  <ApplicationForm onSubmitSuccess={() => showNotification("Application submitted successfully!", "success")} />
+                  <ApplicationForm 
+                    onSubmitSuccess={() => {
+                      showNotification("Application submitted successfully!", "success");
+                      setApplicationStep(1);
+                    }} 
+                  />
                 </CardContent>
               </Card>
+              <div className="mt-8">
+                <ProgressTracker currentStep={applicationStep} />
+              </div>
             </motion.div>
           )}
 
@@ -115,8 +127,10 @@ export default function Home() {
 
         <SuccessStories />
         <Testimonials />
+        <TestimonialSubmission />
         <BlogPosts />
         <FAQ />
+        <ReferralProgram />
         <CTA setShowApplication={setShowApplication} />
         <Support />
         <Chatbot />
