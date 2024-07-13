@@ -8,6 +8,8 @@ import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
+import { Tooltip } from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 import PersonalInfoStep from './steps/PersonalInfoStep';
 import BusinessInfoStep from './steps/BusinessInfoStep';
 import LoanInfoStep from './steps/LoanInfoStep';
@@ -135,5 +137,13 @@ export default function ApplicationForm() {
         </div>
       </form>
     </Form>
+  );
+}
+
+function InfoTooltip({ content }) {
+  return (
+    <Tooltip content={content}>
+      <Info className="h-4 w-4 text-gray-500 ml-1 cursor-help" />
+    </Tooltip>
   );
 }
