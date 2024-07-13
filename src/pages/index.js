@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic';
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import logger from '@/utils/logger';
 
 const DynamicMotion = dynamic(() => import('framer-motion').then((mod) => mod.motion), { ssr: false });
 
@@ -14,7 +13,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    logger.debug('Home component mounted');
+    // Initialize count or perform any client-side only operations here
   }, []);
 
   if (!router.isReady) {
@@ -62,17 +61,7 @@ export default function Home() {
 }
 
 export async function getStaticProps() {
-  try {
-    // Add any necessary data fetching here
-    logger.debug('Generating static props for Home page');
-    return {
-      props: {}, // will be passed to the page component as props
-    }
-  } catch (error) {
-    logger.error('Error in getStaticProps', error);
-    return {
-      props: {},
-      revalidate: 60, // Attempt to regenerate the page after 60 seconds
-    }
+  return {
+    props: {}, // will be passed to the page component as props
   }
 }
