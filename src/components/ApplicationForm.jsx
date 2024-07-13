@@ -10,13 +10,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { Progress } from "@/components/ui/progress";
 import { Tooltip } from "@/components/ui/tooltip";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Info } from "lucide-react";
+import { Info, Upload } from "lucide-react";
 import PersonalInfoStep from './steps/PersonalInfoStep';
 import BusinessInfoStep from './steps/BusinessInfoStep';
 import LoanInfoStep from './steps/LoanInfoStep';
 import SummaryStep from './steps/SummaryStep';
 
-const steps = ['Personal', 'Business', 'Loan', 'Summary'];
+const steps = ['Personal', 'Business', 'Loan', 'Documents', 'Summary'];
 
 const schema = z.object({
   firstName: z.string().min(2, 'First name must be at least 2 characters'),
@@ -29,6 +29,7 @@ const schema = z.object({
   yearsInBusiness: z.number().min(0, 'Years in business must be 0 or greater'),
   loanAmount: z.number().min(1000, 'Loan amount must be at least $1,000'),
   loanPurpose: z.string().min(2, 'Please select a loan purpose'),
+  documents: z.array(z.any()).optional(),
 });
 
 const faqItems = [
@@ -64,6 +65,7 @@ export default function ApplicationForm({ onSubmitSuccess }) {
       yearsInBusiness: 0,
       loanAmount: 1000,
       loanPurpose: '',
+      documents: [],
     },
   });
 
@@ -127,6 +129,11 @@ export default function ApplicationForm({ onSubmitSuccess }) {
     saveProgress(form.getValues());
   };
 
+  const handleFileUpload = (event) => {
+    const files = Array.from(event.target.files);
+    form.setValue('documents', [...form.getValues('documents'), ...files]);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -161,7 +168,30 @@ export default function ApplicationForm({ onSubmitSuccess }) {
             {currentStep === 0 && <PersonalInfoStep form={form} />}
             {currentStep === 1 && <BusinessInfoStep form={form} />}
             {currentStep === 2 && <LoanInfoStep form={form} />}
-            {currentStep === 3 && <SummaryStep form={form} />}
+            {currentStep === 3 && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Upload Documents</h3>
+                <p className="text-sm text-gray-600">Please upload any relevant documents (e.g., bank statements, tax returns)</p>
+                <div className="flex items-center space-x-2">
+                  <Button type="button" onClick={() => document.getElementById('file-upload').click()}>
+                    <Upload className="mr-2 h-4 w-4" /> Upload Files
+                  </Button>
+                  <input
+                    id="file-upload"
+                    type="file"
+                    multiple
+                    className="hidden"
+                    onChange={handleFileUpload}
+                  />
+                </div>
+                <ul className="list-disc pl-5">
+                  {form.getValues('documents').map((file, index) => (
+                    <li key={index} className="text-sm">{file.name}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {currentStep === 4 && <SummaryStep form={form} />}
           </motion.div>
         </AnimatePresence>
 
